@@ -1,0 +1,29 @@
+{
+  "name": "list_directory",
+  "description": "Lists the files and subdirectories within a specified directory in the project. Returns an array of names. Use this to explore the project structure or to find specific files/folders.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "directory_path": {
+        "type": "string",
+        "default": ".",
+        "description": "The relative path from project_path to the directory to list. Defaults to the project_path itself (current directory '.'). Example: 'src/utils' or '.' for the root."
+      },
+      "recursive": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, lists contents recursively including all subdirectories. Defaults to false."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "This tool is idempotent and non-destructive."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "tail_logs",
+  "description": "Streams or fetches recent logs from a deployed application or a running service. This typically involves using a platform-specific CLI command (e.g., 'flyctl logs', 'vercel logs <deploymentId>') or querying a logging service.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "Optional. The root directory path of the project, if needed by the logging CLI (e.g., for Vercel project linking)."
+      },
+      "service_identifier": {
+        "type": "string",
+        "description": "Identifier for the service whose logs are being requested (e.g., Fly.io app name, Vercel deployment ID or project ID, Docker container ID)."
+      },
+      "log_source_type": {
+        "type": "string",
+        "enum": ["fly", "vercel", "docker", "generic_cli"],
+        "description": "Specifies the platform or type of log source to use the correct underlying command or API."
+      },
+      "lines": {
+        "type": "integer",
+        "default": 100,
+        "description": "Number of recent log lines to fetch. Applicable if not continuously following/streaming. For streaming, this might be the initial number of lines to show."
+      },
+      "follow": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, attempts to stream logs continuously (like 'tail -f'). If false, fetches a batch of recent logs. Note: Continuous streaming might have implications for how the orchestrator handles the tool call (e.g., long-lived connection or periodic polling)."
+      },
+      "raw_cli_command": {
+        "type": "string",
+        "description": "Optional. If log_source_type is 'generic_cli', this is the exact command to run to fetch/tail logs."
+      }
+    },
+    "required": ["service_identifier", "log_source_type"]
+  },
+  "hints": {
+    "idempotent": "true for fetching recent logs (follow=false), false for streaming (follow=true as it's a continuous process)",
+    "destructive": false,
+    "description": "Fetches or streams logs. Non-destructive. Can be long-running if follow=true."
+  }
+}

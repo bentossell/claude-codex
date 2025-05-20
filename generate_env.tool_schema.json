@@ -1,0 +1,35 @@
+{
+  "name": "generate_env",
+  "description": "Generates environment variable configuration files (e.g., .env) based on provided key-value pairs or from detected project needs (like database credentials after scaffolding). Use after scaffolding a new project or when new services requiring environment variables are added. This tool helps manage sensitive information and configurations required by the application at runtime.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project where the .env file will be created or updated."
+      },
+      "variables": {
+        "type": "object",
+        "description": "An object where keys are environment variable names and values are their corresponding string values. Example: {\"DATABASE_URL\": \"your_db_url_here\", \"API_KEY\": \"your_api_key_here\"}. Provide this if you have specific key-value pairs to set."
+      },
+      "auto_detect_services": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "An array of service names (e.g., [\"supabase\", \"nextauth\", \"stripe\"]) for which the tool should attempt to auto-generate common environment variables. The tool will look for typical variables associated with these services."
+      },
+      "file_name": {
+        "type": "string",
+        "default": ".env",
+        "description": "The name of the environment file to create or update. Defaults to '.env'."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "This tool is idempotent; running it multiple times with the same inputs will result in the same .env file state. It updates existing variables and adds new ones if specified."
+  }
+}

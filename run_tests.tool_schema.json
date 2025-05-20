@@ -1,0 +1,33 @@
+{
+  "name": "run_tests",
+  "description": "Runs automated tests for the project using a specified test runner command (e.g., jest, pytest, go test). Returns test results, including pass/fail status, stdout, and stderr.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "command": {
+        "type": "string",
+        "description": "The test runner command to execute (e.g., 'npm test', 'pytest -v', 'go test ./...')."
+      },
+      "working_directory": {
+        "type": "string",
+        "default": ".",
+        "description": "Optional subdirectory within project_path where the command should be run. Defaults to project_path itself."
+      },
+      "coverage": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, and the test runner supports it, attempt to generate code coverage reports. The command itself should reflect this intent if necessary (e.g. by including a '--coverage' flag)."
+      }
+    },
+    "required": ["project_path", "command"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "Runs tests. Generally non-destructive, but the specific test command could potentially have side effects if not written carefully."
+  }
+}

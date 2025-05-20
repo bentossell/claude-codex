@@ -1,0 +1,33 @@
+{
+  "name": "git_commit",
+  "description": "Records changes to the repository. Stages all modified and new files (git add .) and then creates a new commit with the provided message. Ensure files are in the desired state before committing.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project containing the Git repository."
+      },
+      "message": {
+        "type": "string",
+        "description": "The commit message describing the changes."
+      },
+      "stage_all_files": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true (default), stages all new and modified files (`git add .`) before committing. If false, assumes files have already been staged appropriately by a previous step or tool."
+      },
+      "allow_empty": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, allows an empty commit (a commit with no changes). Defaults to false."
+      }
+    },
+    "required": ["project_path", "message"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it creates a new commit, modifying the repository's history. It is not idempotent."
+  }
+}

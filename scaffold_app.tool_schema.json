@@ -1,0 +1,25 @@
+{
+  "name": "scaffold_app",
+  "description": "Generate a production-ready starter for a web, mobile or CLI app. Accepts framework, language, auth-needs, db-needs. Creates files in the working directory and installs deps. Use when the user asks to start a new project.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "framework": {
+        "type": "string",
+        "enum": ["nextjs", "expo", "fastapi"]
+      },
+      "database": {
+        "type": "string",
+        "enum": ["postgres", "sqlite", "none"]
+      },
+      "auth": {
+        "type": "boolean"
+      },
+      "project_name": {
+        "type": "string",
+        "description": "The name of the project, which will also be used as the directory name."
+      }
+    },
+    "required": ["framework", "project_name"]
+  }
+}

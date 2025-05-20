@@ -1,0 +1,23 @@
+{
+  "name": "create_directory",
+  "description": "Creates a new directory (and any necessary parent directories) at the specified path within the project. Use this to set up new folder structures for components, modules, assets, etc.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "directory_path": {
+        "type": "string",
+        "description": "The relative path from project_path for the new directory to be created. Example: 'src/assets/images' or 'components/ui'."
+      }
+    },
+    "required": ["project_path", "directory_path"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "This tool is idempotent (if the directory already exists, it usually does nothing or confirms existence) and non-destructive in the sense it doesn't delete anything, but it does create new file system entities."
+  }
+}

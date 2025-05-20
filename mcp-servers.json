@@ -1,0 +1,30 @@
+{
+  "mcp__filesystem": {
+    "command": "npm run start-filesystem-server",
+    "description": "Handles file system operations like reading and writing project files."
+  },
+  "mcp__shell": {
+    "command": "npm run start-shell-server",
+    "description": "Executes shell commands including package managers (npm, pip, cargo)."
+  },
+  "mcp__git": {
+    "command": "npm run start-git-server",
+    "description": "Manages version control operations (init, commit, push)."
+  },
+  "mcp__testing": {
+    "command": "npm run start-testing-server",
+    "description": "Runs test suites using jest, pytest, playwright, etc."
+  },
+  "mcp__deploy": {
+    "command": "npm run start-deploy-server",
+    "description": "Handles deployment to various platforms (vercel, fly, docker-swarm)."
+  },
+  "mcp__generators": {
+    "command": "npm run start-generators-server",
+    "description": "Custom generators for scaffolding applications, creating schemas, etc."
+  },
+  "mcp__permissions": {
+    "command": "npm run start-permissions-server",
+    "description": "Manages security and approval workflows for tool operations."
+  }
+}

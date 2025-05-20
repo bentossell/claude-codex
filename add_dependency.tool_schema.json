@@ -1,0 +1,37 @@
+{
+  "name": "add_dependency",
+  "description": "Adds one or more software dependencies to the project using the appropriate package manager (e.g., npm, yarn for JavaScript; pip for Python; cargo for Rust). The tool can attempt to automatically detect the package manager from project files (like package.json, requirements.txt, Cargo.toml) if not explicitly specified. Use this tool when new libraries or packages are required to extend the project's functionality.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project where the dependencies should be added."
+      },
+      "dependencies": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "A list of dependency names to add. For version-specific installation, include the version in the string, e.g., [\"react@^18.2.0\", \"lodash\"] for npm, or [\"requests==2.25.1\", \"numpy\"] for pip."
+      },
+      "package_manager": {
+        "type": "string",
+        "enum": ["npm", "yarn", "pip", "cargo", "auto"],
+        "default": "auto",
+        "description": "Specify the package manager to use. If 'auto', the tool will attempt to detect it based on project files."
+      },
+      "is_dev_dependency": {
+        "type": "boolean",
+        "default": false,
+        "description": "For package managers that support it (e.g., npm, yarn), specify true to install as a development dependency. Ignored by other package managers."
+      }
+    },
+    "required": ["project_path", "dependencies"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "This tool is generally idempotent for most package managers (e.g., running 'npm install existing_package' usually has no adverse effect). It modifies project configuration files (like package.json) and lock files."
+  }
+}
