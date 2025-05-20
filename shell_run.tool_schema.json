@@ -1,0 +1,35 @@
+{
+  "name": "shell_run",
+  "description": "Executes a specified shell command in the project's root directory or a specified subdirectory. IMPORTANT: This tool can execute arbitrary commands and has significant security implications. It should be used with extreme caution and ideally with commands that are pre-vetted or constructed carefully by the model. Output will include stdout and stderr of the command.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project where the command should be executed."
+      },
+      "command": {
+        "type": "string",
+        "description": "The shell command to execute (e.g., 'npm install', 'python manage.py migrate')."
+      },
+      "working_directory": {
+        "type": "string",
+        "default": ".",
+        "description": "Optional subdirectory within project_path where the command should be run. Defaults to project_path itself."
+      },
+      "env_vars": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Optional key-value pairs for environment variables to set for the command's execution context."
+      }
+    },
+    "required": ["project_path", "command"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is highly destructive and not idempotent as it can modify the file system, install packages, or run arbitrary code. Requires extreme caution and approval."
+  }
+}

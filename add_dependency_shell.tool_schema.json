@@ -1,0 +1,28 @@
+{
+  "name": "add_dependency_shell",
+  "description": "Adds one or more software dependencies to the project by executing the appropriate package manager command (e.g., npm, yarn, pip, cargo). This is a shell-based version. Use when specific flags or advanced package manager features are needed that are not covered by a more abstract add_dependency tool. Specify the full command for the package manager.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "command": {
+        "type": "string",
+        "description": "The full shell command to add dependencies (e.g., 'npm install react react-dom', 'pip install -r requirements.txt', 'yarn add lodash --dev')."
+      },
+      "working_directory": {
+        "type": "string",
+        "default": ".",
+        "description": "Optional subdirectory within project_path where the command should be run. Defaults to project_path itself."
+      }
+    },
+    "required": ["project_path", "command"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool modifies project dependencies and lock files. It is destructive. Idempotency depends on the specific package manager command."
+  }
+}

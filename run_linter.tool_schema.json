@@ -1,0 +1,33 @@
+{
+  "name": "run_linter",
+  "description": "Runs a code linter command on the project (e.g., eslint, flake8, rubocop). The specific linter command must be provided. Returns linter output, including errors and warnings.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "command": {
+        "type": "string",
+        "description": "The linter command to execute (e.g., 'npm run lint', 'eslint . --fix', 'flake8 .')."
+      },
+      "working_directory": {
+        "type": "string",
+        "default": ".",
+        "description": "Optional subdirectory within project_path where the command should be run. Defaults to project_path itself."
+      },
+      "auto_fix": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true and the linter supports it, attempt to automatically fix linting issues. The command itself should reflect this intent if necessary (e.g. by including a '--fix' flag)."
+      }
+    },
+    "required": ["project_path", "command"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": "Depends on auto_fix and linter. Can be destructive if auto_fix is true.",
+    "description": "Runs a linter. Can modify files if auto_fix is enabled and the linter command supports it."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "docker_build_push",
+  "description": "Builds a Docker image from a Dockerfile in the project and pushes it to a specified container registry. Assumes Docker is installed and user is logged into the registry.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project containing the Dockerfile."
+      },
+      "dockerfile_path": {
+        "type": "string",
+        "default": "Dockerfile",
+        "description": "Path to the Dockerfile, relative to project_path. Defaults to 'Dockerfile'."
+      },
+      "image_name": {
+        "type": "string",
+        "description": "The name for the Docker image (e.g., 'myusername/my-app')."
+      },
+      "image_tag": {
+        "type": "string",
+        "default": "latest",
+        "description": "The tag for the Docker image (e.g., 'v1.0.0', 'latest'). Defaults to 'latest'."
+      },
+      "registry_url": {
+        "type": "string",
+        "description": "Optional URL of the container registry. If not provided, defaults to Docker Hub. For other registries like GCR or ECR, this is required (e.g., 'gcr.io/my-project')."
+      },
+      "build_args": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Optional build-time variables (ARG) to pass to the Docker build command."
+      },
+      "push_image": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true (default), pushes the image after a successful build. If false, only builds the image."
+      }
+    },
+    "required": ["project_path", "image_name"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it builds a Docker image and potentially overwrites an existing tag in a registry. Not idempotent."
+  }
+}

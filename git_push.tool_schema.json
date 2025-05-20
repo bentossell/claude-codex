@@ -1,0 +1,38 @@
+{
+  "name": "git_push",
+  "description": "Pushes committed changes from a local branch to a remote repository. Requires the remote repository and branch to be configured or specified. Ensure all desired changes are committed locally before pushing.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project containing the Git repository."
+      },
+      "remote_name": {
+        "type": "string",
+        "default": "origin",
+        "description": "The name of the remote repository to push to (e.g., 'origin'). Defaults to 'origin'."
+      },
+      "branch_name": {
+        "type": "string",
+        "description": "The name of the local branch to push. If not specified, attempts to push the current branch or uses Git's default push behavior for the specified remote."
+      },
+      "force_push": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, performs a force push (git push --force). DANGEROUS: This can overwrite remote history. Use with extreme caution and only if absolutely necessary and understood."
+      },
+      "set_upstream": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, sets the upstream branch for the local branch being pushed (e.g., 'git push -u origin main'). Useful for the first push of a new branch."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it modifies the remote repository. Force pushing is especially destructive. Not idempotent."
+  }
+}

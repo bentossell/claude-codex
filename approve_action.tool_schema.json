@@ -1,0 +1,36 @@
+{
+  "name": "approve_action",
+  "description": "Prompts the user (or an automated policy system) for approval before executing a potentially destructive or sensitive action. This tool is called by the orchestrator when Claude requests an action tagged as destructive and requires explicit confirmation. The tool should return whether the action was approved or denied.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "action_description": {
+        "type": "string",
+        "description": "A human-readable description of the action requiring approval. Example: 'Force push to the main branch of repository X', 'Delete file Y', 'Execute shell command: rm -rf /tmp/foo'."
+      },
+      "requested_tool_name": {
+        "type": "string",
+        "description": "The name of the tool that is requesting permission to run."
+      },
+      "requested_tool_input": {
+        "type": "object",
+        "description": "The input parameters that will be passed to the tool if approved."
+      },
+      "destructive_hint": {
+        "type": "boolean",
+        "description": "Indicates if the action is considered destructive (should always be true if this tool is called)."
+      },
+      "timeout_seconds": {
+        "type": "integer",
+        "default": 300,
+        "description": "Optional timeout in seconds to wait for user approval. If timeout is reached, the action is considered denied. Relevant for non-interactive batches."
+      }
+    },
+    "required": ["action_description", "requested_tool_name", "requested_tool_input"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": false,
+    "description": "This tool itself is not destructive but gates destructive operations. Its outcome (approved/denied) determines if a subsequent destructive action proceeds. Each call is unique."
+  }
+}

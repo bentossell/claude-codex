@@ -1,0 +1,33 @@
+{
+  "name": "write_file",
+  "description": "Writes or overwrites content to a specified file within the project's file system. If the file does not exist, it will be created. If the directories in the path do not exist, they will be created. Use this to create new files, update existing ones, or save generated code/text.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "file_path": {
+        "type": "string",
+        "description": "The relative path from project_path to the file to be written. Example: 'src/components/NewComponent.jsx' or 'config/settings.json'."
+      },
+      "content": {
+        "type": "string",
+        "description": "The content to write to the file. If encoding is 'base64', this should be a base64 encoded string."
+      },
+      "encoding": {
+        "type": "string",
+        "default": "utf8",
+        "enum": ["utf8", "base64"],
+        "description": "The encoding to use for writing the file. Defaults to 'utf8'. Use 'base64' for binary files."
+      }
+    },
+    "required": ["project_path", "file_path", "content"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it overwrites files. It is not inherently idempotent if used to append or modify parts of a file, but if overwriting with the same content, the outcome is the same. For simplicity, consider it destructive."
+  }
+}

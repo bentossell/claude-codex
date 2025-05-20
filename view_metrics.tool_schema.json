@@ -1,0 +1,49 @@
+{
+  "name": "view_metrics",
+  "description": "Fetches and displays key performance metrics for a deployed application or service. This might involve using a platform-specific CLI command (e.g., related to 'flyctl metrics', Vercel analytics) or querying a monitoring service API.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "Optional. The root directory path of the project, if needed by the metrics CLI or for context."
+      },
+      "service_identifier": {
+        "type": "string",
+        "description": "Identifier for the service whose metrics are being requested (e.g., Fly.io app name, Vercel project ID, Docker container ID)."
+      },
+      "metrics_source_type": {
+        "type": "string",
+        "enum": ["fly", "vercel", "docker", "prometheus", "generic_cli"],
+        "description": "Specifies the platform or type of metrics source."
+      },
+      "metrics_queries": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Optional list of specific metrics or queries to fetch (e.g., [\"cpu_usage\", \"memory_usage\", \"http_requests_total\"]). The interpretation depends on the metrics_source_type."
+      },
+      "time_range_start": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Optional start of the time range for metrics (ISO 8601 format)."
+      },
+      "time_range_end": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Optional end of the time range for metrics (ISO 8601 format)."
+      },
+      "raw_cli_command": {
+        "type": "string",
+        "description": "Optional. If metrics_source_type is 'generic_cli', this is the exact command to run to fetch metrics."
+      }
+    },
+    "required": ["service_identifier", "metrics_source_type"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "Fetches metrics. Non-destructive."
+  }
+}

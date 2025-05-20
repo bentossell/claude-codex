@@ -1,0 +1,36 @@
+{
+  "name": "deploy_vercel",
+  "description": "Deploys the current project to Vercel. Assumes Vercel CLI is installed and configured (logged in, project linked or can be linked). This tool will typically run 'vercel deploy --prod' or a similar command.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project to deploy."
+      },
+      "vercel_token": {
+        "type": "string",
+        "description": "Optional Vercel authentication token. If not provided, assumes CLI is already authenticated or will prompt interactively (if possible). For non-interactive environments, this is crucial."
+      },
+      "team_id": {
+        "type": "string",
+        "description": "Optional Vercel Team ID if deploying to a specific team."
+      },
+      "project_name_override": {
+        "type": "string",
+        "description": "Optional name to use for the Vercel project. If not provided, Vercel CLI typically infers it."
+      },
+      "production": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true (default), deploys to production (e.g., 'vercel deploy --prod'). If false, creates a preview deployment."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it creates or updates a deployment on Vercel. Not idempotent."
+  }
+}

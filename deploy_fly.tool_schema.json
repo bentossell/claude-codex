@@ -1,0 +1,40 @@
+{
+  "name": "deploy_fly",
+  "description": "Deploys the current project to Fly.io. Assumes Fly CLI (flyctl) is installed and configured (logged in). This tool will typically run 'flyctl deploy'.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project to deploy."
+      },
+      "fly_auth_token": {
+        "type": "string",
+        "description": "Optional Fly.io authentication token (FLY_API_TOKEN). If not provided, assumes CLI is already authenticated."
+      },
+      "app_name": {
+        "type": "string",
+        "description": "Optional Fly.io application name. If not provided, typically inferred from fly.toml or requires interactive creation."
+      },
+      "region": {
+        "type": "string",
+        "description": "Optional region to deploy to (e.g., 'iad', 'sjc')."
+      },
+      "org_slug": {
+        "type": "string",
+        "description": "Optional Fly.io organization slug."
+      },
+      "config_file": {
+        "type": "string",
+        "default": "fly.toml",
+        "description": "Path to the Fly configuration file, relative to project_path. Defaults to 'fly.toml'."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it creates or updates a deployment on Fly.io. Not idempotent."
+  }
+}

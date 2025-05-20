@@ -1,0 +1,32 @@
+{
+  "name": "format_code",
+  "description": "Automatically formats source code files in the project using a common code formatter (e.g., Prettier for web technologies, Black for Python, gofmt for Go). This tool helps maintain a consistent code style across the project. It can be configured to format specific files, directories, or the entire project based on detected or specified configurations.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project whose files need formatting."
+      },
+      "target_paths": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "An optional list of specific file or directory paths (relative to project_path) to format. If omitted, the tool will attempt to format all supported files in the project or use the formatter's default behavior (e.g., respect .prettierignore)."
+      },
+      "formatter": {
+        "type": "string",
+        "enum": ["prettier", "black", "gofmt", "auto"],
+        "default": "auto",
+        "description": "Specify the formatter to use. If 'auto', the tool will attempt to detect the appropriate formatter based on project configuration (e.g., .prettierrc) or file types."
+      }
+    },
+    "required": ["project_path"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": true,
+    "description": "This tool is idempotent; running it multiple times on the same code (without intermediate changes) will result in the same formatted output. However, it is destructive as it modifies file contents to apply formatting."
+  }
+}

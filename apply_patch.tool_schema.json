@@ -1,0 +1,32 @@
+{
+  "name": "apply_patch",
+  "description": "Applies a code patch to a specified file using a standard diff format (e.g., unified diff format). This tool is used for making targeted code modifications, applying bug fixes, or refactoring existing code segments within a file. Ensure the patch content is correctly formatted and is relative to the current content of the target file.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "file_path": {
+        "type": "string",
+        "description": "The relative path from project_path to the file that needs to be patched. Example: 'src/components/Button.js'."
+      },
+      "patch_content": {
+        "type": "string",
+        "description": "The content of the patch in a standard diff format (e.g., output of 'git diff'). The patch should clearly define the lines to be added, removed, or modified."
+      },
+      "dry_run": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, the tool will simulate applying the patch and report success or failure without making actual changes to the file. Useful for validating a patch."
+      }
+    },
+    "required": ["project_path", "file_path", "patch_content"]
+  },
+  "hints": {
+    "idempotent": false,
+    "destructive": true,
+    "description": "This tool is destructive as it modifies file content. It is not inherently idempotent; applying the same patch twice might lead to errors or unintended results if the file content has changed or if the patch is not designed for re-application."
+  }
+}

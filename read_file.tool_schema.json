@@ -1,0 +1,29 @@
+{
+  "name": "read_file",
+  "description": "Reads the content of a specified file from the project's file system. Returns the content as a string. Use this to inspect file contents or to get data needed for other operations.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "project_path": {
+        "type": "string",
+        "description": "The root directory path of the project."
+      },
+      "file_path": {
+        "type": "string",
+        "description": "The relative path from project_path to the file to be read. Example: 'src/index.js' or 'README.md'."
+      },
+      "encoding": {
+        "type": "string",
+        "default": "utf8",
+        "enum": ["utf8", "base64"],
+        "description": "The encoding to use for reading the file. Defaults to 'utf8'. Use 'base64' for binary files."
+      }
+    },
+    "required": ["project_path", "file_path"]
+  },
+  "hints": {
+    "idempotent": true,
+    "destructive": false,
+    "description": "This tool is idempotent and non-destructive."
+  }
+}
