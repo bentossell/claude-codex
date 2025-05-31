@@ -10,6 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        green: '#a7f3d0',
+        blue: '#bfdbfe',
+        pink: '#fbcfe8',
+        orange: '#fed7aa',
+        purple: '#e9d5ff',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
