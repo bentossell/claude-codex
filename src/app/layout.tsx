@@ -5,6 +5,9 @@ import { authOptions } from "@/lib/auth";
 import { UserNav } from "@/components/UserNav";
 import Link from "next/link";
 import "./globals.css";
+import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Palette } from 'lucide-react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +21,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const colors = ['green', 'blue', 'pink', 'orange', 'purple'];
+  const [selectedColor, setSelectedColor] = useState('green');
   const session = await getServerSession(authOptions);
   
   return (
